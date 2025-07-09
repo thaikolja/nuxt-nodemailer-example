@@ -1,0 +1,22 @@
+/**
+ * @file main.css
+ * @description Global CSS file for the application.
+ */
+
+html {
+  @apply bg-neutral-900 text-neutral-300 text-lg;
+}
+
+header,
+main,
+footer {
+  @apply p-4;
+}
+
+a {
+  @apply transition-all;
+
+  &:hover {
+    @apply opacity-60;
+  }
+}

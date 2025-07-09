@@ -1,93 +1,130 @@
 # Nuxt 3 Nodemailer Example
 
-An example of how to use Nodemailer in a Nuxt 3 application.
+![GitLab Release](https://img.shields.io/gitlab/v/release/thaikolja%2Fnuxt-nodemailer-example) ![GitLab Last Commit](https://img.shields.io/gitlab/last-commit/thaikolja%2Fnuxt-nodemailer-example) ![GitLab License](https://img.shields.io/gitlab/license/thaikolja%2Fnuxt-nodemailer-example)
 
-## Getting started
+This is a **minimal**, **well-commented**, and **easy-to-understand** starter template showing you **how to send emails** from a **Nuxt 3** app using **Nodemailer**. Whether you’re new to Nuxt or server-side JavaScript, this guide has plenty of 👉 **hyperlinks** and 📚 **resources** to help you every step of the way.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+[TOC]
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## 1. 🧐 What Is This?
 
-## Add your files
+A **simple demo** with minimal code and a lot of inline comments showing how to:
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+- **Use [Nodemailer](https://nodemailer.com/about/) to send emails via SMTP (primary purpose)**
+- Create a **server API route** in [Nuxt 3](https://nuxt.com/) (`/server/api/send.post.ts`)
+- Securely **store secrets** in an [`.env`](https://12factor.net/config) file and retrieve them
+- **Trigger the email** from a basic Vue form with [`$fetch`](https://nuxt.com/docs/3/apis/nuxt#fetch)
 
+## 2. 💡 Things You Should Know
+
+This demo project was completed on July 8, 2025, and won't be updated unless a bug is found. The date matters because it indicates the latest versions of all modules listed in the `package.json` file.
+
+I created this project using **macOS Sequia** `v15.6 Beta`. If you're using [Windows](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows) or [Linux](https://www.geeksforgeeks.org/node-js/installation-of-node-js-on-linux/) and have no prior experience with Nuxt or Node.js projects, please familiarize yourself with them before continuing.
+
+## 3. ✅ Prerequisites
+
+Before you begin, you need a few things:
+
+1. [Node.js](https://nodejs.org/en/download) `v22.17.0` or newer (test with the command `node -v`)
+2. Node package manager like `npm`, `yarn`, or `bun` (preferred)
+3. A **Gmail** account with an app-specific password that you can [create here](https://myaccount.google.com/apppasswords)
+4. Basic familiarity with the terminal/command line
+
+## 4. 📦 Setup & Installation
+
+1. **Clone this repository**
+
+```bash
+git clone https://gitlab.com/thaikolja/nuxt-nodemailer-example
+cd nuxt-nodemailer-example
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/thaikolja/nuxt-3-nodemailer-example.git
-git branch -M main
-git push -uf origin main
+2. **Install dependencies**
+```bash
+bun i # Recommended
+# or
+npm install
+# or
+yarn install
+# or
+pnpm install
 ```
 
-## Integrate with your tools
+3. **Review project structure**
+```
+.
+├─ assets/          # CSS & static assets (Tailwind CSS)
+├─ pages/           # Vue pages (front-end form)
+├─ server/
+│   └─ api/
+│       └─ send.post.ts  # ← Our email-sending endpoint
+├─ .env             # ← You’ll create this (secrets live here)
+├─ nuxt.config.ts   # Nuxt configuration
+└─ package.json     # Project metadata & scripts
+```
 
-- [ ] [Set up project integrations](https://gitlab.com/thaikolja/nuxt-3-nodemailer-example/-/settings/integrations)
+## 5. 🔐 Configure Your Email Credentials
 
-## Collaborate with your team
+### 5.1 Generate a Gmail App Password
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+1. Go to Google Account → **Security** → [App passwords](https://myaccount.google.com/apppasswords).
+2. Give the password a name (i.e., "Nuxt Nodemailer Example").
+3. Click **Generate**, then **copy** the 16-character password.
 
-## Test and Deploy
+> [!WARNING]
+>
+> **Do not** use your main Gmail password. **App Passwords** are required for SMTP access.
 
-Use the built-in continuous integration in GitLab.
+### 5.2 Create `.env`
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+In the project root, create a file named `.env` and add:
 
-***
+```env
+# Who receives the emails (your inbox)
+EMAIL_TO=your_receive_email@example.com
 
-# Editing this README
+# Who sends the emails (your Gmail)
+EMAIL_USERNAME=your_gmail_address@gmail.com
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+# The App Password you generated
+EMAIL_PASSWORD=XXXXXXXXXXXXXXXX
+```
 
-## Suggestions for a good README
+> [!WARNING]
+>
+> 🛡️ `.env` is listed in `.gitignore` to keep it **out of version control**.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## 6. ▶️ Run the Example
 
-## Name
-Choose a self-explaining name for your project.
+Start the Nuxt **development** server:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```bash
+npm run dev
+# or `bun dev`, `yarn dev`, `pnpm dev`
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Open your browser at [http://localhost:3000](http://localhost:3000). Fill out the form and hit **Send**—then check your inbox!
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## 7. 🔍 Exploring the Code
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+* `server/api/send.post.ts`: **This is the core of the example.** Study this file to understand how Nodemailer is configured and used. It's heavily commented to explain each step.
+* `pages/index.vue`: Contains the simple form that triggers the API call. It shows how to use `$fetch` to communicate with the Nuxt server endpoint.
+* `nuxt.config.ts`: The configuration file for Nuxt. Note that no special configuration is needed for the server route to work.
+* `package.json`: Lists the project dependencies, including `nodemailer`.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## 8. 🎉 Done!
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+🎉 You’re all set! This example should provide a solid foundation for sending emails in your Nuxt 3 applications. Feel free to fork, experiment, and build your next big feature!
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## 9. 📚 Useful Resources
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- 🔗 Vue.js Official Guide: https://vuejs.org/guide/
+- 🔗 Nuxt 3 Docs: https://nuxt.com/docs
+- 🔗 Nodemailer Tutorial: https://nodemailer.com/about/
+- 🔗 Tailwind CSS: https://tailwindcss.com/
+- 🔗 12-Factor Apps (Config): https://12factor.net/config
+- 🔗 Environment Variables in Node: https://nodejs.org/api/process.html#processenv
+- 🔗 Deploying Nuxt 3: https://nuxt.com/docs/deployment/introduction
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## 10. Authors
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+* Kolja Nolte (kolja.nolte@gmail.com)
