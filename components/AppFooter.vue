@@ -49,10 +49,6 @@
 </template>
 
 <style lang="postcss" scoped>
-  /**
-   * Scoped styles for the AppFooter component.
-   */
-
   /*
    * A utility class to create a consistent layout for links that contain an icon and text.
    * It uses Tailwind's @apply directive to compose utility classes.

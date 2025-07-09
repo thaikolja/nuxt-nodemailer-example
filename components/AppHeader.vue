@@ -29,6 +29,7 @@
     <h1 class="text-4xl font-bold">
       Nuxt Nodemailer
     </h1>
+
     <!-- The secondary heading (H2), providing a brief description of the application. -->
     <h2 class="text-xl font-medium">
       A simple example of using Nodemailer with Nuxt 3
