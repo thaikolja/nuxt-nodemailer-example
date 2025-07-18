@@ -161,6 +161,10 @@ Depending on your skills, these links might help you move forward with Nuxt proj
 - 🔗 **Environment Variables in Node:** https://nodejs.org/api/process.html#processenv
 - 🔗 **Deploying Nuxt 3:** https://nuxt.com/docs/deployment/introduction
 
+## 8. License
+
+MIT
+
 ## 9. Authors
 
 * Kolja Nolte (kolja.nolte@gmail.com)
