@@ -58,9 +58,6 @@ export default defineEventHandler( async ( event ) => {
   const username: string = process.env.EMAIL_USERNAME!
   const password: string = process.env.EMAIL_PASSWORD!
 
-  console.log( username )
-  console.log( password )
-
   // The `sent` variable which we'll give to the front-end so it knows if all worked out or not
   let sent = false
 
