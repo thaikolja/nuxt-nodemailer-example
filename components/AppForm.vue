@@ -72,10 +72,12 @@
       } )
 
       // The back-end lets us know whether the email was sent as `true` or `false`
-      wasSent.value = data.sent as boolean
-
-      // The back-end that tell a human-readable message whether the email was sent or not
-      serverMessage.value = data.message as string
+      if ( data.sent ) {
+        wasSent.value = true
+        serverMessage.value = data.message
+      } else {
+        serverMessage.value = data.message
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch ( error: any ) {
@@ -152,7 +154,7 @@
       </div>
 
       <!-- This is the place where we'll display an error message if the form was not sent successfully -->
-      <div v-if="serverMessage" class="p-4 mb-8 text-center bg-red-900 text-red-300">
+      <div v-if="serverMessage && !wasSent" class="p-4 mb-8 text-center bg-red-900 text-red-300">
         {{ serverMessage }}
       </div>
 

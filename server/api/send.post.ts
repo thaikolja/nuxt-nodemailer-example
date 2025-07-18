@@ -24,9 +24,6 @@
 /* The first import is optional; it provides the IDE with type information */
 import { defineEventHandler, readBody } from '#imports'
 
-/* Even though Nuxt auto-imports a lot, on the server side, we still need to import things manually */
-import { ref }                          from 'vue'
-
 /* This is the main library we use to send emails */
 import nodemailer                       from 'nodemailer'
 
@@ -39,22 +36,18 @@ import nodemailer                       from 'nodemailer'
  * 4. Use the transporter to send the email
  * 5. Return the status of the email sending operation for the front-end to handle
  *
- * @returns {Promise<{ sent: boolean, message: string, status: number }>} An object containing the status of the email sending operation
+ * @returns {Promise<{ sent: boolean, message: string }>} An object containing the status of the email sending operation
  * @throws {Error} If there is an error while sending the email, it will be logged to the console
  */
 export default defineEventHandler( async ( event ) => {
   /*
-   * Alright, let's define some variables. Most of them are reactive (`ref()`), which gives us the
-   * possibility to change their value later on (in JS, `const` can't be overwritten, actually).
-   * We start with the body—the data that was sent through the form—and also retrieve our email
-   * username and password from our `.env` file, so make sure this is set up.
+   * Alright, let's define some variables. We start with the body—the data that was sent
+   * through the form—and also retrieve our email username and password from our `.env` file,
+   * so make sure this is set up.
    */
 
   // The `data` variable will hold the body of the request, which contains all form fields' values
   const data = await readBody( event )
-
-  // The `fromEmail` variable will hold the user's email address
-  const fromEmail = data.user_email
 
   /*
    * The following three variables are environment variables that we set in our `.env` file.
@@ -65,11 +58,14 @@ export default defineEventHandler( async ( event ) => {
   const username: string = process.env.EMAIL_USERNAME!
   const password: string = process.env.EMAIL_PASSWORD!
 
+  console.log( username )
+  console.log( password )
+
   // The `sent` variable which we'll give to the front-end so it knows if all worked out or not
-  const sent = ref( false )
+  let sent = false
 
   // We want to inform the user whether the email was sent or not with a message
-  const message = ref( '' )
+  let message = ''
 
   /* Now, let's create a Nodemailer transporter using Gmail's service */
   const transporter = nodemailer.createTransport( {
@@ -88,8 +84,11 @@ export default defineEventHandler( async ( event ) => {
 
   /* The transporter is set up, now we define what the email is actually about */
   const mailOptions = {
-    // This field is pretty self-explanatory; it is the email address of the sender
-    from: fromEmail,
+    // This is the email address of the sender, which is the same as the authenticated user
+    from: username,
+
+    // This is the email address of the user who submitted the form, so you can reply to them
+    replyTo: data.email,
 
     // Also self-explanatory; it is the email address of the recipient
     to: toEmail,
@@ -110,10 +109,10 @@ export default defineEventHandler( async ( event ) => {
     await transporter.sendMail( mailOptions )
 
     // If it all went well, we set the `sent` variable to `true` to later tell the front-end about it
-    sent.value = true
+    sent = true
 
     // Because we're nice, we thank the user for sending us a message :)
-    message.value = `Thank you for your message, ${data?.user_name}!`
+    message = `Thank you for your message, ${data?.name}!`
 
     // Eh, a `catch` means something went wrong. We tell the front-end by setting `sent` to `false`
   } catch ( e ) {
@@ -121,21 +120,18 @@ export default defineEventHandler( async ( event ) => {
     console.log( e )
 
     // Set the message to be an error message
-    message.value = 'An error has occurred while sending the email. Please try it again.'
+    message = 'An error has occurred while sending the email. Please try it again.'
 
     // Set our variable to `false`
-    sent.value = false
+    sent = false
   }
 
   // The moment of truth! We return an object containing the `sent` status and the HTTP response status
   return {
     // (bool): Whether the email was sent or not
-    sent: sent.value,
+    sent,
 
     // (string): Either a success or error message to display
-    message: message.value,
-
-    // (number): HTTP code of the response **of this API endpoint**, not the Gmail server
-    status: getResponseStatus( event )
+    message
   }
 } )

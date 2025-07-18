@@ -34,7 +34,7 @@
     </NuxtLink>
 
     <!-- Link to the README page. In this app, it links to the root. -->
-    <NuxtLink to="/" title="View README.md" class="has-icon">
+        <NuxtLink to="https://gitlab.com/thaikolja/nuxt-nodemailer-example/-/blob/main/README.md?ref_type=heads" target="_blank" title="View README.md" class="has-icon">
       <Icon name="mdi:paper-outline" size="20" />
       <!-- The <code> tag provides a monospaced font style for the filename. -->
       <span>View <code>README.md</code></span>
