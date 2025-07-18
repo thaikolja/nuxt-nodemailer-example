@@ -22,10 +22,16 @@
  * @see {@link https://nuxt.com/docs/api/configuration/nuxt-config}
  */
 export default defineNuxtConfig( {
-  // This is some Nuxt thing; you can safely ignore this
-  compatibilityDate: '2025-05-15',
+  /*
+   * Sets a specific date for Nuxt to ensure compatibility with future versions.
+   * This helps prevent breaking changes when Nuxt updates its internal APIs.
+   * You can read more about this at https://nuxt.com/docs/api/configuration/nuxt-config#compatibilitydate
+   */
+  compatibilityDate: '2024-04-03',
 
-  // We don't need this
+  /* Disables the Nuxt DevTools, a browser extension that provides debugging information.
+   * For this example, we keep it simple and disable it.
+   */
   devtools: {
     enabled: false
   },
