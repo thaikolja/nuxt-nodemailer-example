@@ -28,7 +28,7 @@
   <!-- The semantic footer element, using Flexbox to distribute links evenly. -->
   <footer class="flex justify-between items-center p-6 text-xs text-neutral-500">
     <!-- Link to the GitLab repository. `target="_blank"` opens it in a new tab. -->
-    <NuxtLink to="https://gitlab.com/thaikolja/nuxt-nodemailer" target="_blank" title="View source code on GitLab" class="has-icon">
+    <NuxtLink to="https://gitlab.com/thaikolja/nuxt-nodemailer-example" target="_blank" title="View source code on GitLab" class="has-icon">
       <Icon name="mdi:gitlab" size="20" />
       <span>Code on GitLab</span>
     </NuxtLink>
@@ -41,7 +41,7 @@
     </NuxtLink>
 
     <!-- Link to the GitHub repository. `target="_blank"` opens it in a new tab. -->
-    <NuxtLink to="https://github.com/thaikolja/nuxt-nodemailer" target="_blank" title="View source code on GitHub" class="has-icon">
+    <NuxtLink to="https://github.com/thaikolja/nuxt-nodemailer-example" target="_blank" title="View source code on GitHub" class="has-icon">
       <Icon name="mdi:github" size="20" />
       <span>Code on GitHub</span>
     </NuxtLink>
